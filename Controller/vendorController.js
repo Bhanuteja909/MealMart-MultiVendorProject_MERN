@@ -58,10 +58,44 @@ const vendorLogin = async(req, res)=>{
         console.log("Error in email or password");
      }
 
-
 }
     
+const getAllVendors =async(req,res)=>{
+    try
+    {
+         const vendors=await Vendor.find().populate('firm'); //extract all vendor records and in that  add s firm details by replacing firm ID
+         res.json({vendors});
+    } 
+    catch (error) {
+        console.log(error);
+          res.status(500).json({error:"Internal server error"});
+        
+    }
+}
+
+const getVendorById=async(req,res)=>
+{
+    const vendorId=req.params.person;
+
+    try {
+        const vendor=await Vendor.findById(vendorId).populate("firm");
+        if(!vendor)
+        {
+            return res.status(404).json({error:"Vendor not found"});
+        }
+        res.status(200).json({vendor});
+    } 
+    catch (error)
+    {
+         console.log(error);
+          res.status(500).json({error:"Internal server error"});
+        
+    }
+
+}
 
 
-module.exports = {VendorRegister, vendorLogin};
+
+
+module.exports = {VendorRegister, vendorLogin,getAllVendors,getVendorById};
  

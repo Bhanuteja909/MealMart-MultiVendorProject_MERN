@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+const mongoose= require("mongoose");
 
 const firmSchema= new mongoose.Schema({
     firmname:{
@@ -37,9 +37,17 @@ const firmSchema= new mongoose.Schema({
     vendor:[
         {
             type:mongoose.Schema.Types.ObjectId,  //forming firm relation with vendor 
-            ref:"vendor"
+            ref:"Vendor"
         }
     ]
+,
+      products:[
+                {
+                    type:mongoose.Schema.Types.ObjectId, 
+                    ref:"Product"
+                }
+            ]
+    
 });
 
 const Firm=mongoose.model("Firm",firmSchema);
